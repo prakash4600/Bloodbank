@@ -3,7 +3,7 @@ version: 0.2
 phases:
 pre_build:
 commands:
-- echo Logging in to Amazon ECR...
+- echo "Logging in to Amazon ECR"
 - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 - REGION=ap-south-1
 - REPO_NAME=php-app
@@ -12,11 +12,11 @@ commands:
 
 build:
 commands:
-- echo Building Docker image...
+- echo "Building Docker image"
 - docker build -t $REPO_NAME:$IMAGE_TAG .
 - docker tag $REPO_NAME:$IMAGE_TAG $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
 
 post_build:
 commands:
-- echo Pushing Docker image...
+- echo "Pushing Docker image"
 - docker push $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
